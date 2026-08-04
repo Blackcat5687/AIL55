@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:maxHeight="560dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="16dp">
+
+        <!-- top row: close + reset controls, and the "Filter" section header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="14dp">
+
+            <ImageView
+                android:id="@+id/buttonClose"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_close"
+                android:padding="2dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/cancel" />
+
+            <ImageView
+                android:id="@+id/buttonResetView"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_refresh"
+                android:padding="2dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/graph_restart" />
+
+            <LinearLayout
+                android:id="@+id/headerFilter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|end"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:paddingVertical="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/graph_filter"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/chevronFilter"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/ic_chevron_right"
+                    android:rotation="90"
+                    android:contentDescription="@null" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sectionFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/editGraphSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/graph_search_hint"
+                android:maxLines="1"
+                android:inputType="text"
+                android:layout_marginBottom="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="4dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/graph_show_tags"
+                    android:textSize="15sp" />
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchTags"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="4dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/graph_hide_orphans"
+                    android:textSize="15sp" />
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchOrphans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="4dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/graph_show_ghosts"
+                    android:textSize="15sp" />
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchGhosts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/graph_local_depth"
+                android:textSize="13sp" android:alpha="0.7"/>
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderLocalDepth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="1" android:valueTo="4" android:stepSize="1" android:value="2" />
+        </LinearLayout>
+
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" />
+
+        <!-- Groups section -->
+        <LinearLayout
+            android:id="@+id/headerGroups"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="14dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/graph_groups"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/chevronGroups"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_chevron_right"
+                android:rotation="90"
+                android:contentDescription="@null" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sectionGroups"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/groupRows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.TextButton"
+                android:id="@+id/buttonAddGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:text="@string/graph_group_add" />
+        </LinearLayout>
+
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" />
+
+        <!-- Display section -->
+        <LinearLayout
+            android:id="@+id/headerDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="14dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/graph_display"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/chevronDisplay"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_chevron_right"
+                android:rotation="90"
+                android:contentDescription="@null" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sectionDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="4dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/graph_arrows"
+                    android:textSize="15sp" />
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchArrows"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/graph_fade_threshold"
+                android:textSize="13sp" android:alpha="0.7"/>
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderFade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="0.2" android:valueTo="2" android:value="0.8" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/graph_node_size"
+                android:textSize="13sp" android:alpha="0.7"/>
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderNodeSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="4" android:valueTo="36" android:value="14" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/graph_link_thickness"
+                android:textSize="13sp" android:alpha="0.7"/>
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderLinkThickness"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="1" android:valueTo="10" android:value="2" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRestart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="6dp"
+                android:text="@string/graph_restart" />
+        </LinearLayout>
+
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#1AFFFFFF" />
+
+        <!-- Forces section -->
+        <LinearLayout
+            android:id="@+id/headerForces"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="14dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/graph_forces"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/chevronForces"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_chevron_right"
+                android:rotation="90"
+                android:contentDescription="@null" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sectionForces"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/graph_center_strength"
+                android:textSize="13sp" android:alpha="0.7"/>
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderCenter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="0" android:valueTo="1" android:value="0.3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/graph_repel_strength"
+                android:textSize="13sp" android:alpha="0.7"/>
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderRepel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="200" android:valueTo="4000" android:value="1200" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/graph_collision_margin"
+                android:textSize="13sp" android:alpha="0.7"/>
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderCollisionMargin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="16" android:valueTo="120" android:value="16" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/graph_link_strength"
+                android:textSize="13sp" android:alpha="0.7"/>
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderLinkStrength"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="0" android:valueTo="1" android:value="0.4" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/graph_link_distance"
+                android:textSize="13sp" android:alpha="0.7"/>
+            <com.google.android.material.slider.Slider
+                android:id="@+id/sliderLinkDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="40" android:valueTo="320" android:value="140" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
